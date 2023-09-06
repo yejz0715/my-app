@@ -23,6 +23,12 @@ module.exports = {
                     loader: "ts-loader",
                 },
             },
+            //scc
+            {
+                test: /\.scss$/,
+                use: ["style-loader", "css-loader", "sass-loader"],
+                exclude: /node_modules/,
+            },
         ],
     },
     plugins: [
