@@ -23,11 +23,21 @@ module.exports = {
                     loader: "ts-loader",
                 },
             },
-            //scc
+            //scss
             {
                 test: /\.scss$/,
                 use: ["style-loader", "css-loader", "sass-loader"],
                 exclude: /node_modules/,
+            },
+            //이미지 파일 로더
+            {
+                test: /\.(png|jpe?g|gif|svg|webp)$/i,
+                use: {
+                    loader: "file-loader",
+                    options: {
+                        name: "[name].[contenthash]",
+                    },
+                },
             },
         ],
     },
