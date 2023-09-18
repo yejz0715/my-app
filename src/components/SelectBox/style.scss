@@ -1,0 +1,29 @@
+$primary-color: green;
+
+.select-container {
+    width: 100%;
+    max-width: 200px;
+    margin-top: 20px;
+    background-color: $primary-color;
+    cursor: pointer;
+}
+
+.selector {
+    cursor: pointer;
+    color: white;
+}
+.options {
+    max-height: 0;
+    overflow: hidden;
+
+    &.open {
+        max-height: 100%;
+    }
+}
+
+.option {
+    color: black;
+}
+.selectorOption {
+    color: white;
+}
