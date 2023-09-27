@@ -6,9 +6,11 @@
     "author": "yejz0715",
     "license": "MIT",
     "dependencies": {
+        "classnames": "^2.3.2",
         "css-loader": "^6.8.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-router-dom": "^6.16.0",
         "sass": "^1.66.1",
         "style-loader": "^3.3.3"
     },
