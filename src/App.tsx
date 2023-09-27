@@ -1,9 +1,12 @@
-import image from "./assets/image.png";
+import Header from "./components/Header";
+import SelectBox from "./components/SelectBox";
+import Sidebar from "./components/Sidebar";
+import Main from "./pages/Main";
 const App = () => {
     return (
-        <div>
-            <h1>Hello!</h1>
-            <img src={image} width="150px" />
+        <div className="app-container">
+            <Sidebar />
+            <Main />
         </div>
     );
 };
