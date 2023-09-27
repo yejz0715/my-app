@@ -1,2 +1,10 @@
 @import "base/reset";
 @import "base/typography";
+@import "abstracts/variables";
+
+.app-container {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+}
