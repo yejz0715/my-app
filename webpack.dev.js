@@ -7,7 +7,5 @@ module.exports = merge(config, {
         host: "localhost",
         historyApiFallback: true,
         port: 3000,
-        // hot: true,
-        // open: true,
     },
 });
