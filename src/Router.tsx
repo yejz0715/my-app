@@ -6,8 +6,9 @@ const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Main />} />
-                <Route path="/details/:subId" element={<Details />} />
+                <Route path="/" element={<Main />}>
+                    <Route path="/details/:subId" element={<Details />} />
+                </Route>
             </Routes>
         </BrowserRouter>
     );
