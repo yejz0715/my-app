@@ -1,6 +1,12 @@
 import React from "react";
 import "./style.scss";
-const Sidebar = () => {
+import { Link } from "react-router-dom";
+import { chapterType } from "@src/types/sidebar";
+
+interface SidebarProps {
+    contents: chapterType[];
+}
+const Sidebar = ({ contents }: SidebarProps) => {
     const handleOnClick = (name: string) => {
         const subNav = document.querySelector<HTMLElement>(`#${name}`);
         const subNavInner = document.querySelector<HTMLElement>(
@@ -20,30 +26,30 @@ const Sidebar = () => {
         <aside className="sidebar-container">
             <nav className="sidebar-nav">
                 <header className="sidebar-header">StudyBook</header>
-                <div>
-                    <button
-                        className="sidebar-item"
-                        onClick={() => handleOnClick("test")}
-                    >
-                        <span>test</span>
-                    </button>
-                    <div className="sub-nav" id="test">
-                        <div className="sub-nav-inner">
-                            <button className="sidebar-item">
-                                <span>서브1</span>
-                            </button>
-
-                            <button className="sidebar-item">
-                                <span>서브2</span>
-                            </button>
+                {contents.map((chapter) => (
+                    <div key={chapter.id}>
+                        <button
+                            className="sidebar-item"
+                            onClick={() => handleOnClick(chapter.name)}
+                        >
+                            <span>{chapter.name}</span>
+                        </button>
+                        <div className="sub-nav" id={chapter.name}>
+                            <div className="sub-nav-inner">
+                                {chapter.children.map((item) => (
+                                    <button
+                                        key={item.id}
+                                        className="sidebar-item"
+                                    >
+                                        <Link to={`/details/${item.id}`}>
+                                            <span>{item.name}</span>
+                                        </Link>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <button className="sidebar-item">
-                        <span>test2</span>
-                    </button>
-                </div>
+                ))}
             </nav>
         </aside>
     );
