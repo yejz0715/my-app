@@ -9,3 +9,8 @@ export type chapterType = {
     name: string;
     children: childType[];
 };
+
+export type cardType = {
+    name: string;
+    imgUrl: string;
+};
