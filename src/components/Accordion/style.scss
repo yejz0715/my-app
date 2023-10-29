@@ -1,0 +1,26 @@
+.accordion-container {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    gap: 10px;
+    align-items: center;
+}
+
+article {
+    position: relative;
+    overflow: hidden;
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    opacity: 0.9;
+    transition: 0.5s;
+}
+article.active {
+    width: 300px;
+    opacity: 1;
+}
+
+article img {
+    z-index: 0;
+    transition: -50% -50%;
+}
