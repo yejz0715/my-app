@@ -1,26 +1,65 @@
 .accordion-container {
     display: flex;
-    flex-direction: row;
-    justify-items: center;
-    gap: 10px;
-    align-items: center;
+    flex-direction: column;
+}
+
+.accordion-warp {
+    display: flex;
+    gap: 4px;
+    cursor: pointer;
 }
 
 article {
     position: relative;
     overflow: hidden;
-    width: 150px;
-    height: 150px;
-    border-radius: 10px;
+    width: 45px;
+    height: 300px;
+    border-radius: 20px;
     opacity: 0.9;
     transition: 0.5s;
 }
+
 article.active {
-    width: 300px;
+    width: 180px;
     opacity: 1;
 }
 
 article img {
     z-index: 0;
     transition: -50% -50%;
+    height: 150%;
+}
+
+article .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    padding: 14px;
+    transition: 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+article span {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: white;
+}
+article .name {
+    font-weight: 500;
+    font-size: 23px;
+    cursor: default;
+    padding-bottom: 3px;
+}
+article .rgb {
+    font-size: 16px;
+    cursor: copy;
+}
+
+article.active .content {
+    opacity: 1;
+    visibility: visible;
 }

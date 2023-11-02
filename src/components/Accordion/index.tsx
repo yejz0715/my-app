@@ -13,28 +13,28 @@ const Accordion = () => {
     };
 
     return (
-        <>
-            <section className="accordion-container">
+        <div className="accordion-container">
+            <section className="accordion-warp">
                 {cards.map((item, index) => (
                     <article
                         key={index}
                         onClick={() => setActive(index)}
                         className={active === index ? "active" : ""}
                     >
-                        <img src={item.imgUrl} alt={item.name} />
+                        <img src={item.imgUrl} alt={item.name} width="180px" />
                         <div className="content">
-                            <span id="name">{item.name}</span>
-                            <div className="rgb-content">
-                                <span>{item.rgb}</span>
-                                <button onClick={() => copyOnClick(item.rgb)}>
-                                    copy
-                                </button>
-                            </div>
+                            <span className="name">{item.name}</span>
+                            <span
+                                onClick={() => copyOnClick(item.rgb)}
+                                className="rgb"
+                            >
+                                {item.rgb}
+                            </span>
                         </div>
                     </article>
                 ))}
             </section>
-        </>
+        </div>
     );
 };
 export default Accordion;
