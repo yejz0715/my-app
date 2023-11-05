@@ -1,4 +1,4 @@
-import { cardType } from "@src/types/components";
+import { cardType, colorsType } from "@src/types/components";
 import imgRed from "../assets/accordion/red.png";
 import imgOrange from "../assets/accordion/orange.png";
 import imgYellow from "../assets/accordion/yellow.png";
@@ -42,5 +42,40 @@ export const cards: cardType[] = [
         name: "purple",
         imgUrl: imgPurple,
         rgb: "#800080",
+    },
+];
+
+export const colors: colorsType[] = [
+    {
+        name: "red",
+        rgb: "#FF0000",
+    },
+    {
+        name: "orange",
+        rgb: "#FFA500",
+    },
+    {
+        name: "yellow",
+        rgb: "#FFFF00",
+    },
+    {
+        name: "green",
+        rgb: "#008000",
+    },
+    {
+        name: "blue",
+        rgb: "#0000FF",
+    },
+    {
+        name: "navy",
+        rgb: "#000080",
+    },
+    {
+        name: "purple",
+        rgb: "#800080",
+    },
+    {
+        name: "black",
+        rgb: "#000000",
     },
 ];

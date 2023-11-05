@@ -13,4 +13,10 @@ export type chapterType = {
 export type cardType = {
     name: string;
     imgUrl: string;
+    rgb: string;
+};
+
+export type colorsType = {
+    name: string;
+    rgb: string;
 };

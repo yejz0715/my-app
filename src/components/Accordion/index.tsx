@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { cards } from "../../data/dummy";
+// import data from "../../../db.json";
 
 const Accordion = () => {
+    // const cards = data.cards;
     const [active, setActive] = useState(0);
     const copyOnClick = async (text: string) => {
         try {
