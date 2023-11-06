@@ -1,0 +1,73 @@
+{
+    "chapter": [
+        {
+            "id": "a00",
+            "name": "select",
+            "children": [
+                {
+                    "id": "a01",
+                    "name": "default select",
+                    "parentId": "a00"
+                },
+                {
+                    "id": "a02",
+                    "name": "checkbox select",
+                    "parentId": "a00"
+                },
+                {
+                    "id": "a03",
+                    "name": "input select",
+                    "parentId": "a00"
+                }
+            ]
+        },
+        {
+            "id": "b00",
+            "name": "input",
+            "children": []
+        },
+        {
+            "id": "c00",
+            "name": "accordion",
+            "children": []
+        }
+    ],
+
+    "cards": [
+        {
+            "name": "red",
+            "imgUrl": "/assets/red.png",
+            "rgb": "#FF0000"
+        },
+        {
+            "name": "orange",
+            "imgUrl": "imgOrange",
+            "rgb": "#FFA500"
+        },
+        {
+            "name": "yellow",
+            "imgUrl": "imgYellow",
+            "rgb": "#FFFF00"
+        },
+        {
+            "name": "green",
+            "imgUrl": "imgGreen",
+            "rgb": "#008000"
+        },
+        {
+            "name": "blue",
+            "imgUrl": "imgBlue",
+            "rgb": "#0000FF"
+        },
+        {
+            "name": "navy",
+            "imgUrl": "imgNavy",
+            "rgb": "#000080"
+        },
+        {
+            "name": "purple",
+            "imgUrl": "imgPurple",
+            "rgb": "#800080"
+        }
+    ]
+}
