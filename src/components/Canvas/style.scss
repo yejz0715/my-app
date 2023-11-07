@@ -1,0 +1,69 @@
+.canvas-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+#canvas {
+    border: 5px solid #167c80;
+    background-color: white;
+}
+
+.canvas-tools {
+    display: flex;
+    gap: 9px;
+    margin-top: 3px;
+}
+
+.canvas-tools .circle,
+.canvas-tools .rect {
+    width: 40px;
+    height: 40px;
+    margin-top: 9px;
+    border: 2px solid #555555;
+    background-color: white;
+    cursor: pointer;
+}
+
+.circle {
+    border-radius: 50%;
+}
+.brush {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+#line-range {
+    width: 160px;
+    height: 19px;
+    margin-top: 19px;
+    border: 2px solid #555555;
+    accent-color: #167c80;
+    cursor: pointer;
+}
+.save {
+    margin-top: 3px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.canvas-colors {
+    display: flex;
+}
+
+.canvas-colors .color {
+    width: 40px;
+    height: 40px;
+    padding: 13px;
+}
+
+.canvas-colors button {
+    margin-right: 4px;
+    border: none;
+    cursor: pointer;
+}
