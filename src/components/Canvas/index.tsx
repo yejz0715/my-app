@@ -23,16 +23,17 @@ const Canvas = () => {
         ctx.strokeStyle = "black";
     };
 
-    const pointerdown = () => {
+    const onPointerDown = () => {
         isDrag = true;
     };
-    const pointerup = () => {
+    const onPointerUp = () => {
         isDrag = false;
     };
 
-    const pointermove = (e: any) => {
-        canvas.addEventListener("pointerdown", pointerdown);
-        canvas.addEventListener("pointerup", pointerup);
+    //선 그리기
+    const drawPath = (e: PointerEvent) => {
+        canvas.addEventListener("pointerdown", onPointerDown);
+        canvas.addEventListener("pointerup", onPointerUp);
         const { offsetX, offsetY } = e;
 
         if (!ctx) return;
@@ -46,29 +47,39 @@ const Canvas = () => {
         }
     };
 
-    //그리기
-    const drawLine = () => {
-        canvas.addEventListener("pointermove", pointermove);
-    };
-
     //원그리기
-    const drawCircle = () => {
-        canvas.addEventListener("pointerup", (e) => {
-            if (!ctx) return;
-
-            const { offsetX, offsetY } = e;
-            ctx.arc(offsetX, offsetY, 100, 0, 2 * Math.PI);
-            ctx.stroke();
-        });
+    const completeCircle = (e: PointerEvent) => {
+        const { offsetX, offsetY } = e;
+        if (!ctx) return;
+        ctx.beginPath();
+        ctx.arc(offsetX, offsetY, 80, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.closePath();
     };
 
     //사각형그리기
+    const completeRect = (e: PointerEvent) => {
+        const { offsetX, offsetY } = e;
+        if (!ctx) return;
+        ctx.strokeRect(offsetX, offsetY, 150, 150);
+    };
+
+    const drawLine = () => {
+        canvas.removeEventListener("pointerup", completeCircle);
+        canvas.removeEventListener("pointerup", completeRect);
+        canvas.addEventListener("pointermove", drawPath);
+    };
+
+    const drawCircle = () => {
+        canvas.removeEventListener("pointermove", drawPath);
+        canvas.removeEventListener("pointerup", completeRect);
+        canvas.addEventListener("pointerup", completeCircle);
+    };
+
     const drawRect = () => {
-        canvas.addEventListener("pointerup", (e) => {
-            if (!ctx) return;
-            const { offsetX, offsetY } = e;
-            ctx.strokeRect(offsetX, offsetY, 150, 150);
-        });
+        canvas.removeEventListener("pointermove", drawPath);
+        canvas.removeEventListener("pointerup", completeCircle);
+        canvas.addEventListener("pointerup", completeRect);
     };
 
     //붓굵기
@@ -113,7 +124,7 @@ const Canvas = () => {
             <div className="canvas-tools">
                 <button onClick={drawCircle} className="circle"></button>
                 <button onClick={drawRect} className="rect"></button>
-                <button className="brush" onClick={drawLine}>
+                <button onClick={drawLine} className="brush">
                     <img src={brush} width="38px" />
                 </button>
                 <input
@@ -126,7 +137,7 @@ const Canvas = () => {
                     onChange={handleLineWidthChange}
                 />
                 <button className="save" onClick={handleSave}>
-                    <img src={save} width="48px" />
+                    <img src={save} width="54px" />
                 </button>
             </div>
             <div className="canvas-colors">
