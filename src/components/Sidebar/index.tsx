@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.scss";
 import { Link } from "react-router-dom";
-import { chapterType } from "@src/types/sidebar";
+import { chapterType } from "@src/types/components";
 
 interface SidebarProps {
     contents: chapterType[];
@@ -28,26 +28,43 @@ const Sidebar = ({ contents }: SidebarProps) => {
                 <header className="sidebar-header">StudyBook</header>
                 {contents.map((chapter) => (
                     <div key={chapter.id}>
-                        <button
-                            className="sidebar-item"
-                            onClick={() => handleOnClick(chapter.name)}
-                        >
-                            <span>{chapter.name}</span>
-                        </button>
-                        <div className="sub-nav" id={chapter.name}>
-                            <div className="sub-nav-inner">
-                                {chapter.children.map((item) => (
-                                    <button
-                                        key={item.id}
-                                        className="sidebar-item"
-                                    >
-                                        <Link to={`/details/${item.id}`}>
-                                            <span>{item.name}</span>
-                                        </Link>
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
+                        {chapter.children.length === 0 ? (
+                            <button className="sidebar-item">
+                                <Link
+                                    to={`/details/${chapter.id}`}
+                                    className="sidebar-item-label"
+                                >
+                                    <span>{chapter.name}</span>
+                                </Link>
+                            </button>
+                        ) : (
+                            <>
+                                <button
+                                    className="sidebar-item"
+                                    onClick={() => handleOnClick(chapter.name)}
+                                >
+                                    <span>{chapter.name}</span>
+                                </button>
+
+                                <div className="sub-nav" id={chapter.name}>
+                                    <div className="sub-nav-inner">
+                                        {chapter.children.map((item) => (
+                                            <button
+                                                key={item.id}
+                                                className="sidebar-item"
+                                            >
+                                                <Link
+                                                    to={`/details/${item.id}`}
+                                                    className="sidebar-item-children-label"
+                                                >
+                                                    <span>{item.name}</span>
+                                                </Link>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
                 ))}
             </nav>
