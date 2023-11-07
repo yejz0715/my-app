@@ -1,35 +1,41 @@
 {
     "chapter": [
         {
-            "id": "a00",
-            "name": "select",
+            "id": "A00",
+            "name": "input",
             "children": [
                 {
-                    "id": "a01",
-                    "name": "default select",
-                    "parentId": "a00"
+                    "id": "A01",
+                    "name": "selectBox",
+                    "parentId": "A00"
                 },
                 {
-                    "id": "a02",
-                    "name": "checkbox select",
-                    "parentId": "a00"
-                },
-                {
-                    "id": "a03",
-                    "name": "input select",
-                    "parentId": "a00"
+                    "id": "A02",
+                    "name": "checkbox",
+                    "parentId": "A00"
                 }
             ]
         },
         {
-            "id": "b00",
-            "name": "input",
+            "id": "B00",
+            "name": "accordion",
             "children": []
         },
         {
-            "id": "c00",
-            "name": "accordion",
-            "children": []
+            "id": "C00",
+            "name": "graphic",
+            "children": [
+                {
+                    "id": "C01",
+                    "name": "svg",
+                    "parentId": "C00"
+                },
+                {
+                    "id": "C02",
+                    "name": "canvas",
+                    "parentId": "COO"
+                }
+            ]
         }
     ],
 
