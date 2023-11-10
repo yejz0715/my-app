@@ -234,7 +234,7 @@ src/
 
 `이미지 처리`
 
-`CustomSelect 만들기`
+`Custom SelectBox`
 
 ### 참조
 [webpack.kr](https://webpack.kr/configuration/resolve/)
