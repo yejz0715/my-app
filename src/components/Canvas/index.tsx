@@ -10,6 +10,8 @@ const Canvas = () => {
     const CANVAS_HEIGHT = 768;
     const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
     const [lineWidthValue, setLineWidthValue] = useState(20);
+    const undoList: any = [];
+    const redoList: any = [];
     let ctx: CanvasRenderingContext2D | null;
     let isDrag = false;
 
@@ -28,6 +30,7 @@ const Canvas = () => {
     };
     const onPointerUp = () => {
         isDrag = false;
+        undoList.push(canvas.toDataURL());
     };
 
     //선 그리기
@@ -55,6 +58,7 @@ const Canvas = () => {
         ctx.arc(offsetX, offsetY, 80, 0, 2 * Math.PI);
         ctx.stroke();
         ctx.closePath();
+        undoList.push(canvas.toDataURL());
     };
 
     //사각형그리기
@@ -62,24 +66,25 @@ const Canvas = () => {
         const { offsetX, offsetY } = e;
         if (!ctx) return;
         ctx.strokeRect(offsetX, offsetY, 150, 150);
+        undoList.push(canvas.toDataURL());
     };
 
     const drawLine = () => {
+        canvas.addEventListener("pointermove", drawPath);
         canvas.removeEventListener("pointerup", completeCircle);
         canvas.removeEventListener("pointerup", completeRect);
-        canvas.addEventListener("pointermove", drawPath);
     };
 
     const drawCircle = () => {
+        canvas.addEventListener("pointerup", completeCircle);
         canvas.removeEventListener("pointermove", drawPath);
         canvas.removeEventListener("pointerup", completeRect);
-        canvas.addEventListener("pointerup", completeCircle);
     };
 
     const drawRect = () => {
+        canvas.addEventListener("pointerup", completeRect);
         canvas.removeEventListener("pointermove", drawPath);
         canvas.removeEventListener("pointerup", completeCircle);
-        canvas.addEventListener("pointerup", completeRect);
     };
 
     //붓굵기
@@ -112,6 +117,31 @@ const Canvas = () => {
         document.body.removeChild(a);
     };
 
+    //뒤로가기
+    const unDo = () => {
+        const undoImage = new Image();
+
+        if (undoList.length === 0) return;
+
+        undoImage.src = undoList.pop();
+        redoList.push(undoImage.src);
+        undoImage.onload = () => {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            ctx.drawImage(undoImage, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        };
+    };
+    //앞으로가기
+    const reDo = () => {
+        const redoImage = new Image();
+        redoImage.src = redoList.pop();
+        redoImage.onload = () => {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+            ctx.drawImage(redoImage, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        };
+    };
+
     init();
 
     return (
@@ -136,6 +166,8 @@ const Canvas = () => {
                     value={lineWidthValue}
                     onChange={handleLineWidthChange}
                 />
+                <button onClick={unDo}>뒤로가기</button>
+                <button onClick={reDo}>앞으로가기</button>
                 <button className="save" onClick={handleSave}>
                     <img src={save} width="54px" />
                 </button>
