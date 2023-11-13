@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
-import eraser from "../../assets/eraser.png";
-import brush from "../../assets/brush.png";
-import save from "../../assets/save.png";
+import brush from "../../assets/canvas/brush.png";
+import undo from "../../assets/canvas/undo.png";
+import redo from "../../assets/canvas/redo.png";
+import save from "../../assets/canvas/save.png";
+import eraser from "../../assets/canvas/eraser.png";
 import { colors } from "../../data/dummy";
 
 const Canvas = () => {
@@ -24,7 +26,6 @@ const Canvas = () => {
         ctx.lineCap = "round";
         ctx.strokeStyle = "black";
     };
-
     const onPointerDown = () => {
         isDrag = true;
     };
@@ -122,9 +123,9 @@ const Canvas = () => {
         const undoImage = new Image();
 
         if (undoList.length === 0) return;
-
-        undoImage.src = undoList.pop();
-        redoList.push(undoImage.src);
+        const undoUrl = undoList.pop();
+        undoImage.src = undoUrl;
+        redoList.push(undoUrl);
         undoImage.onload = () => {
             if (!ctx) return;
             ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -134,7 +135,10 @@ const Canvas = () => {
     //앞으로가기
     const reDo = () => {
         const redoImage = new Image();
-        redoImage.src = redoList.pop();
+        if (redoList.length === 0) return;
+        const redoUrl = redoList.pop();
+        redoImage.src = redoUrl;
+        undoList.push(redoUrl);
         redoImage.onload = () => {
             if (!ctx) return;
             ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -166,9 +170,13 @@ const Canvas = () => {
                     value={lineWidthValue}
                     onChange={handleLineWidthChange}
                 />
-                <button onClick={unDo}>뒤로가기</button>
-                <button onClick={reDo}>앞으로가기</button>
-                <button className="save" onClick={handleSave}>
+                <button onClick={unDo}>
+                    <img src={undo} width="45" />
+                </button>
+                <button onClick={reDo}>
+                    <img src={redo} width="45" />
+                </button>
+                <button onClick={handleSave}>
                     <img src={save} width="54px" />
                 </button>
             </div>
