@@ -1,4 +1,4 @@
-﻿# my-app
+﻿# studyBook
 
 create-react-app을 사용하지 않고, react 프로젝트를 구축하기
 
