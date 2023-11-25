@@ -1,4 +1,10 @@
-import { cardType, colorsType } from "@src/types/components";
+import { cardType, colorsType, pathType } from "../types/components";
+import SelectBox from "../components/SelectBox";
+import CheckBox from "../components/CheckBox";
+import Accordion from "../components/Accordion";
+import Svg from "../components/Svg";
+import Canvas from "../components/Canvas";
+import Alert from "../components/Alert";
 import imgRed from "../assets/accordion/red.png";
 import imgOrange from "../assets/accordion/orange.png";
 import imgYellow from "../assets/accordion/yellow.png";
@@ -6,6 +12,15 @@ import imgGreen from "../assets/accordion/green.png";
 import imgBlue from "../assets/accordion/blue.png";
 import imgNavy from "../assets/accordion/navy.png";
 import imgPurple from "../assets/accordion/purple.png";
+
+export const pathName: pathType[] = [
+    { id: "A01", component: SelectBox },
+    { id: "A02", component: CheckBox },
+    { id: "B00", component: Accordion },
+    { id: "C01", component: Svg },
+    { id: "C02", component: Canvas },
+    { id: "D00", component: Alert },
+];
 
 export const cards: cardType[] = [
     {
