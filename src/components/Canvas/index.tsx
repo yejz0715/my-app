@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
 import brush from "../../assets/canvas/brush.png";
-import undo from "../../assets/canvas/undo.png";
-import redo from "../../assets/canvas/redo.png";
+import undoImg from "../../assets/canvas/undo.png";
+import redoImg from "../../assets/canvas/redo.png";
 import save from "../../assets/canvas/save.png";
 import eraser from "../../assets/canvas/eraser.png";
 import { colors } from "../../data/dummy";
@@ -11,8 +11,9 @@ const Canvas = () => {
     const CANVAS_WIDTH = 1024;
     const CANVAS_HEIGHT = 768;
     const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
+    const [tool, setTool] = useState("");
     const [lineWidthValue, setLineWidthValue] = useState(20);
-    const undoList: any = [];
+    const undoList: any = []; //string x
     const redoList: any = [];
     let ctx: CanvasRenderingContext2D | null;
     let isDrag = false;
@@ -35,11 +36,8 @@ const Canvas = () => {
     };
 
     //선 그리기
-    const drawPath = (e: PointerEvent) => {
-        canvas.addEventListener("pointerdown", onPointerDown);
-        canvas.addEventListener("pointerup", onPointerUp);
+    const drawLine = (e: PointerEvent) => {
         const { offsetX, offsetY } = e;
-
         if (!ctx) return;
 
         if (!isDrag) {
@@ -52,7 +50,7 @@ const Canvas = () => {
     };
 
     //원그리기
-    const completeCircle = (e: PointerEvent) => {
+    const drawCircle = (e: PointerEvent) => {
         const { offsetX, offsetY } = e;
         if (!ctx) return;
         ctx.beginPath();
@@ -63,29 +61,33 @@ const Canvas = () => {
     };
 
     //사각형그리기
-    const completeRect = (e: PointerEvent) => {
+    const drawRect = (e: PointerEvent) => {
         const { offsetX, offsetY } = e;
         if (!ctx) return;
         ctx.strokeRect(offsetX, offsetY, 150, 150);
         undoList.push(canvas.toDataURL());
     };
 
-    const drawLine = () => {
-        canvas.addEventListener("pointermove", drawPath);
-        canvas.removeEventListener("pointerup", completeCircle);
-        canvas.removeEventListener("pointerup", completeRect);
-    };
+    const selectTools = (e: any) => {
+        const { id } = e.target;
 
-    const drawCircle = () => {
-        canvas.addEventListener("pointerup", completeCircle);
-        canvas.removeEventListener("pointermove", drawPath);
-        canvas.removeEventListener("pointerup", completeRect);
-    };
-
-    const drawRect = () => {
-        canvas.addEventListener("pointerup", completeRect);
-        canvas.removeEventListener("pointermove", drawPath);
-        canvas.removeEventListener("pointerup", completeCircle);
+        switch (id) {
+            case "circle":
+                canvas.addEventListener("pointerup", drawCircle);
+                canvas.removeEventListener("pointerup", drawRect);
+                canvas.removeEventListener("pointermove", drawLine);
+                break;
+            case "rect":
+                canvas.addEventListener("pointerup", drawRect);
+                canvas.removeEventListener("pointermove", drawLine);
+                canvas.removeEventListener("pointerup", drawCircle);
+                break;
+            case "line":
+                canvas.addEventListener("pointermove", drawLine);
+                canvas.removeEventListener("pointerup", drawCircle);
+                canvas.removeEventListener("pointerup", drawRect);
+                break;
+        }
     };
 
     //붓굵기
@@ -119,7 +121,7 @@ const Canvas = () => {
     };
 
     //뒤로가기
-    const unDo = () => {
+    const undo = () => {
         const undoImage = new Image();
 
         if (undoList.length === 0) return;
@@ -133,7 +135,7 @@ const Canvas = () => {
         };
     };
     //앞으로가기
-    const reDo = () => {
+    const redo = () => {
         const redoImage = new Image();
         if (redoList.length === 0) return;
         const redoUrl = redoList.pop();
@@ -154,12 +156,27 @@ const Canvas = () => {
                 id="canvas"
                 width={CANVAS_WIDTH}
                 height={CANVAS_HEIGHT}
+                onPointerDown={onPointerDown}
+                onPointerUp={onPointerUp}
             ></canvas>
             <div className="canvas-tools">
-                <button onClick={drawCircle} className="circle"></button>
-                <button onClick={drawRect} className="rect"></button>
-                <button onClick={drawLine} className="brush">
-                    <img src={brush} width="38px" />
+                <button
+                    onClick={selectTools}
+                    id="circle"
+                    className="circle"
+                ></button>
+                <button
+                    onClick={selectTools}
+                    id="rect"
+                    className="rect"
+                ></button>
+                <button className="brush">
+                    <img
+                        src={brush}
+                        width="38"
+                        onClick={selectTools}
+                        id="line"
+                    />
                 </button>
                 <input
                     type="range"
@@ -170,14 +187,14 @@ const Canvas = () => {
                     value={lineWidthValue}
                     onChange={handleLineWidthChange}
                 />
-                <button onClick={unDo}>
-                    <img src={undo} width="45" />
+                <button onClick={undo}>
+                    <img src={undoImg} width="45" />
                 </button>
-                <button onClick={reDo}>
-                    <img src={redo} width="45" />
+                <button onClick={redo}>
+                    <img src={redoImg} width="45" />
                 </button>
                 <button onClick={handleSave}>
-                    <img src={save} width="54px" />
+                    <img src={save} width="54" />
                 </button>
             </div>
             <div className="canvas-colors">
@@ -191,7 +208,7 @@ const Canvas = () => {
                 ))}
 
                 <button onClick={() => handleSetStrokeColor("white")}>
-                    <img src={eraser} width="31px" />
+                    <img src={eraser} width="31" />
                 </button>
                 <button onClick={removeBoard}>전체 지우기</button>
             </div>
