@@ -20,3 +20,8 @@ export type colorsType = {
     name: string;
     rgb: string;
 };
+
+export type pathType = {
+    id: string;
+    component: React.FC;
+};
