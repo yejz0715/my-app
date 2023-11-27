@@ -12,7 +12,9 @@ const Alert = () => {
         <div>
             {isOpen && (
                 <div className="alert-wrap">
-                    <h1 className="alert-title">hi :)</h1>
+                    <h1 className="alert-title">
+                        Hi there! Have a great day! :)
+                    </h1>
                     <button onClick={handleCloseAlert} className="close-button">
                         확인
                     </button>
