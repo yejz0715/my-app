@@ -10,27 +10,23 @@ const Alert = () => {
         setIsOpen(false);
     };
     useEffect(() => {
-        const time = setTimeout(() => {
-            console.log("5초지남");
+        if (!isOpen) return;
+        const timeOut = setTimeout(() => {
             setIsOpen(false);
-        }, 5000);
+        }, 3000);
 
         return () => {
-            clearTimeout(time);
+            clearTimeout(timeOut);
         };
     }, [isOpen]);
     return (
         <div>
-            {isOpen && (
-                <div className={classNames(isOpen ? "alert-wrap" : "alert")}>
-                    <h1 className="alert-title">
-                        Hi there! Have a great day! :)
-                    </h1>
-                    <button onClick={handleCloseAlert} className="close-button">
-                        확인
-                    </button>
-                </div>
-            )}
+            <div className={classNames("alert-wrap", isOpen && "open-alert")}>
+                <h1 className="alert-title">Hi there! Have a great day! :)</h1>
+                <button onClick={handleCloseAlert} className="close-button">
+                    확인
+                </button>
+            </div>
             <button
                 onClick={handleOpenAlert}
                 className={classNames(
