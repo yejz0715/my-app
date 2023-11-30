@@ -14,7 +14,7 @@
     align-items: center;
     height: 4.5rem;
     padding: 0 1.25rem 0 15px;
-    font-size: 20px;
+    font-size: 25px;
     font-weight: bold;
     color: $background-color;
 }
@@ -26,17 +26,23 @@
 
 .sub-nav button {
     padding-left: 3.7rem;
+    &:hover {
+        background-color: red;
+    }
+    &:focus {
+        background-color: black;
+    }
 }
 .sub-nav button::before {
     content: "";
     position: absolute;
     top: 50%;
-    left: 2.25rem;
+    left: 40px;
     translate: 0 -50%;
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: $background-color;
+    background: white;
 }
 
 .sidebar-item {
@@ -46,7 +52,7 @@
     align-items: center;
     height: 3.125rem;
     width: 100%;
-    font-size: 1rem;
+    font-size: 19px;
     font-weight: 500;
     line-height: 1;
     padding: 0 1.5625rem;
@@ -55,6 +61,12 @@
     color: $background-color;
     cursor: pointer;
     text-decoration: none;
+    &:hover {
+        background-color: red;
+    }
+    &:focus {
+        background-color: black;
+    }
 }
 
 .sidebar-item.active {
@@ -66,6 +78,6 @@
     text-decoration: none;
 }
 .sidebar-item-children-label {
-    color: black;
+    color: white;
     text-decoration: none;
 }
