@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 
-const Svg = () => {
-    const handleOnclick = (num: number) => {
+/**
+ * Svg component 입니다.
+ * @returns {JSX.Element}
+ */
+const Svg = (): JSX.Element => {
+    //   클릭 이벤트 함수_선택한 버튼의 텍스트 내용을 나타내고, 음성으로 읽어줍니다.
+    const handleOnclick = (num: number): void => {
         const numText = document.querySelector("#num");
         if (!numText) return;
         numText.textContent = `${num}`;
@@ -10,7 +15,8 @@ const Svg = () => {
         speechSynthesis.speak(utterance);
     };
 
-    const setEventListener = () => {
+    //   1-9번 버튼에 이벤트를 추가하는 함수
+    const setEventListener = (): void => {
         const buttons = document.querySelectorAll(".num-button");
 
         if (!buttons) return;
@@ -20,7 +26,7 @@ const Svg = () => {
             button.addEventListener("click", () => handleOnclick(i));
         }
     };
-    useEffect(() => {
+    useEffect((): void => {
         setEventListener();
     }, []);
     return (
