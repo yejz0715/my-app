@@ -1,28 +1,34 @@
 import React, { useState } from "react";
 import classNames from "classnames";
 import "./style.scss";
+import { selectDataType } from "@src/types/components";
 
-const data = [
-    { id: 1, text: "하나", value: "one" },
-    { id: 2, text: "둘", value: "two" },
-    { id: 3, text: "셋", value: "three" },
-];
-const SelectBox = () => {
-    const [state, setState] = useState(false);
-    const [selectedValue, setSelectedValue] = useState({
+/**
+ * selectBox component 입니다.
+ * @param {selectDataType} data selectBox의 옵션목록
+ * @returns {JSX.Element}
+ */
+const SelectBox = ({ data }: selectDataType): JSX.Element => {
+    const [state, setState] = useState<boolean>(false);
+    const [selectedValue, setSelectedValue] = useState<{
+        text: string;
+        value: string;
+    }>({
         text: "선택",
         value: "",
     });
-    const handleClick = () => {
+
+    const handleClick = (): void => {
         setState((prev) => !prev);
     };
-    const handleSelect = (e: React.MouseEvent<HTMLElement>) => {
+
+    //클릭 이벤트 함수_선택한 요소의 text와 value를 가져옵니다.
+    const handleSelect = (e: React.MouseEvent<HTMLElement>): void => {
         const target = e.target as HTMLElement;
         const text = target.innerHTML;
         const value = target.getAttribute("value");
-        if (!value) {
-            return;
-        }
+        if (!value) return;
+
         setSelectedValue({ text, value });
     };
 
@@ -33,19 +39,20 @@ const SelectBox = () => {
                 className={classNames("options", state && "open")}
                 onClick={handleSelect}
             >
-                {data.map((item) => (
-                    <li
-                        key={item.id}
-                        className={
-                            item.text === selectedValue.text
-                                ? "selectorOption"
-                                : "option"
-                        }
-                        value={item.value}
-                    >
-                        {item.text}
-                    </li>
-                ))}
+                {data &&
+                    data.map((item: { [id: string]: any }) => (
+                        <li
+                            key={item.id}
+                            className={
+                                item.text === selectedValue.text
+                                    ? "selectorOption"
+                                    : "option"
+                            }
+                            value={item.value}
+                        >
+                            {item.text}
+                        </li>
+                    ))}
             </ul>
         </div>
     );
