@@ -13,8 +13,16 @@ import imgBlue from "../assets/accordion/blue.png";
 import imgNavy from "../assets/accordion/navy.png";
 import imgPurple from "../assets/accordion/purple.png";
 
-export const pathName: pathType[] = [
-    { id: "A01", component: SelectBox },
+// Select content 데이터(id, text, value)
+const selectData = [
+    { id: 1, text: "하나", value: "one" },
+    { id: 2, text: "둘", value: "two" },
+    { id: 3, text: "셋", value: "three" },
+];
+
+// 컴포넌트 목록 데이터(id, 컴포넌트 이름, props)
+export const componentList: pathType[] = [
+    { id: "A01", component: SelectBox, props: { data: selectData } },
     { id: "A02", component: CheckBox },
     { id: "B00", component: Accordion },
     { id: "C01", component: Svg },
@@ -22,6 +30,7 @@ export const pathName: pathType[] = [
     { id: "D00", component: Alert },
 ];
 
+// Accordion 카드 데이터(name, umgUrl, rgb)
 export const cards: cardType[] = [
     {
         name: "red",
@@ -60,6 +69,7 @@ export const cards: cardType[] = [
     },
 ];
 
+// Canvas colors 데이터(name, rgb)
 export const colors: colorsType[] = [
     {
         name: "red",
