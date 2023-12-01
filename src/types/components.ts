@@ -10,6 +10,20 @@ export type chapterType = {
     children: childType[];
 };
 
+export type pathType = {
+    id: string;
+    component: (props?: any) => JSX.Element;
+    props?: { [id: string]: any };
+};
+
+export type sidebarProps = {
+    contents: chapterType[];
+};
+
+export type selectDataType = {
+    data: { [id: string]: any };
+};
+
 export type cardType = {
     name: string;
     imgUrl: string;
@@ -19,9 +33,4 @@ export type cardType = {
 export type colorsType = {
     name: string;
     rgb: string;
-};
-
-export type pathType = {
-    id: string;
-    component: React.FC;
 };
