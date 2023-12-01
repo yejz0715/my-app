@@ -1,6 +1,5 @@
 import Router from "./Router";
-import Sidebar from "./components/Sidebar";
-const App = () => {
+const App = (): JSX.Element => {
     return (
         <div className="app-container">
             <Router />

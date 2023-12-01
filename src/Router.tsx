@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 
-const Router = () => {
+const Router = (): JSX.Element => {
     return (
         <BrowserRouter>
             <Routes>
