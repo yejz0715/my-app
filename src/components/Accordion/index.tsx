@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { cards } from "../../data/dummy";
-// import data from "../../../db.json";
 
-const Accordion = () => {
-    // const cards = data.cards;
-    const [active, setActive] = useState(0);
-    const copyOnClick = async (text: string) => {
+/**
+    Accordion component 입니다.
+ * @returns  {JSX.Element}
+ */
+const Accordion = (): JSX.Element => {
+    const [active, setActive] = useState<number>(0);
+
+    // 선택한 색상 코드를 복사하는 함수
+    const copyOnClick = async (text: string): Promise<void> => {
         try {
             await navigator.clipboard.writeText(`${text}`);
         } catch (error) {
@@ -17,24 +21,29 @@ const Accordion = () => {
     return (
         <div className="accordion-container">
             <section className="accordion-warp">
-                {cards.map((item, index) => (
-                    <article
-                        key={index}
-                        onClick={() => setActive(index)}
-                        className={active === index ? "active" : ""}
-                    >
-                        <img src={item.imgUrl} alt={item.name} width="180px" />
-                        <div className="content">
-                            <span className="name">{item.name}</span>
-                            <span
-                                onClick={() => copyOnClick(item.rgb)}
-                                className="rgb"
-                            >
-                                {item.rgb}
-                            </span>
-                        </div>
-                    </article>
-                ))}
+                {cards &&
+                    cards.map((item, index) => (
+                        <article
+                            key={index}
+                            onClick={() => setActive(index)}
+                            className={active === index ? "active" : ""}
+                        >
+                            <img
+                                src={item.imgUrl}
+                                alt={item.name}
+                                width="180px"
+                            />
+                            <div className="content">
+                                <span className="name">{item.name}</span>
+                                <span
+                                    onClick={() => copyOnClick(item.rgb)}
+                                    className="rgb"
+                                >
+                                    {item.rgb}
+                                </span>
+                            </div>
+                        </article>
+                    ))}
             </section>
         </div>
     );
