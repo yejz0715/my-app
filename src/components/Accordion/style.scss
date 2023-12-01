@@ -25,38 +25,42 @@ article.active {
 }
 
 article img {
+    height: 150%;
     z-index: 0;
     transition: -50% -50%;
-    height: 150%;
 }
 
 article .content {
     position: absolute;
     bottom: 0;
     left: 0;
-    z-index: 1;
-    opacity: 0;
-    visibility: hidden;
-    padding: 14px;
-    transition: 0.25s;
     display: flex;
     flex-direction: column;
     gap: 4px;
+    font-weight: 600;
+    visibility: hidden;
+    padding: 14px;
+    opacity: 0;
+    z-index: 1;
+    transition: 0.25s;
 }
 
 article span {
-    background-color: rgba(0, 0, 0, 0.1);
     color: white;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 article .name {
-    font-weight: 500;
     font-size: 23px;
+    padding: 0 2px 5px 2px;
     cursor: default;
-    padding-bottom: 3px;
 }
 article .rgb {
     font-size: 16px;
-    cursor: copy;
+}
+article .copied {
+    font-size: 14px;
+    padding-bottom: 2px;
+    background-color: black;
 }
 
 article.active .content {

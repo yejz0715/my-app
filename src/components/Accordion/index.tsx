@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { cards } from "../../data/dummy";
+import classNames from "classnames";
 
 /**
     Accordion component 입니다.
@@ -8,11 +9,16 @@ import { cards } from "../../data/dummy";
  */
 const Accordion = (): JSX.Element => {
     const [active, setActive] = useState<number>(0);
+    const [isCopy, setIsCopy] = useState<boolean>(false);
 
     // 선택한 색상 코드를 복사하는 함수
     const copyOnClick = async (text: string): Promise<void> => {
         try {
             await navigator.clipboard.writeText(`${text}`);
+            setIsCopy(true);
+            setTimeout(() => {
+                setIsCopy(false);
+            }, 1000);
         } catch (error) {
             console.error(error);
         }
@@ -31,16 +37,20 @@ const Accordion = (): JSX.Element => {
                             <img
                                 src={item.imgUrl}
                                 alt={item.name}
-                                width="180px"
+                                width="180"
                             />
                             <div className="content">
                                 <span className="name">{item.name}</span>
-                                <span
-                                    onClick={() => copyOnClick(item.rgb)}
-                                    className="rgb"
-                                >
-                                    {item.rgb}
-                                </span>
+                                {!isCopy ? (
+                                    <span
+                                        onClick={() => copyOnClick(item.rgb)}
+                                        className="rbg"
+                                    >
+                                        {item.rgb}
+                                    </span>
+                                ) : (
+                                    <span className="copied">copied</span>
+                                )}
                             </div>
                         </article>
                     ))}
