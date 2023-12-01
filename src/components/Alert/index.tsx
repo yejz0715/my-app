@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
 import classNames from "classnames";
-const Alert = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const handleOpenAlert = () => {
+
+/**
+ * Alert component 입니다.
+ * @returns {JSX.Element}
+ */
+const Alert = (): JSX.Element => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    const handleOpenAlert = (): void => {
         setIsOpen(true);
     };
-    const handleCloseAlert = () => {
+
+    const handleCloseAlert = (): void => {
         setIsOpen(false);
     };
+
     useEffect(() => {
         if (!isOpen) return;
         const timeOut = setTimeout(() => {
