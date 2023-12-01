@@ -8,31 +8,36 @@ import eraser from "../../assets/canvas/eraser.png";
 import { colors } from "../../data/dummy";
 import classNames from "classnames";
 
-const Canvas = () => {
+/**
+ * Canvas component 입니다.
+ * @returns {JSX.Element}
+ */
+const Canvas = (): JSX.Element => {
     const CANVAS_WIDTH = 1024;
     const CANVAS_HEIGHT = 768;
     const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
     const ref = useRef<HTMLCanvasElement | null>(null);
-
     const [tool, setTool] = useState<string>("");
     const [lineWidthValue, setLineWidthValue] = useState<number>(20);
+    const [currentColor, setCurrentColor] = useState<string>("black");
     const undoList: string[] = [];
     const redoList: string[] = [];
     let ctx: CanvasRenderingContext2D | null;
     let isDrag = false;
 
-    const init = () => {
+    // 초기화 설정하는 함수
+    const init = (): void => {
         if (!canvas) return;
         ctx = canvas.getContext("2d");
         if (!ctx) return;
 
         ctx.lineWidth = lineWidthValue;
         ctx.lineCap = "round";
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = currentColor;
     };
 
-    //선 그리기
-    const drawLine = (e: PointerEvent) => {
+    //그림판_도구: 선을 그리는 함수
+    const drawLine = (e: PointerEvent): void => {
         if (!ctx) return;
 
         const { offsetX, offsetY } = e;
@@ -48,8 +53,8 @@ const Canvas = () => {
         // undoList.push(ref.current!.toDataURL());
     };
 
-    //원그리기
-    const drawCircle = (offsetX: number, offsetY: number) => {
+    //그림판_도구: 원을 그리는 함수
+    const drawCircle = (offsetX: number, offsetY: number): void => {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(offsetX, offsetY, 80, 0, 2 * Math.PI);
@@ -57,16 +62,18 @@ const Canvas = () => {
         ctx.closePath();
     };
 
-    //사각형그리기
-    const drawRect = (offsetX: number, offsetY: number) => {
+    //그림판_도구: 사각형을 그리는 함수
+    const drawRect = (offsetX: number, offsetY: number): void => {
         if (!ctx) return;
         ctx.strokeRect(offsetX, offsetY, 150, 150);
     };
 
-    const onPointerDown = () => {
+    const onPointerDown = (): void => {
         isDrag = true;
     };
-    const onPointerUp = (e: PointerEvent) => {
+
+    //  그림판 도구 원과 사각형중에서 선택하는 함수
+    const onPointerUp = (e: PointerEvent): void => {
         const { offsetX, offsetY } = e;
         isDrag = false;
         switch (tool) {
@@ -76,32 +83,39 @@ const Canvas = () => {
             case "rect":
                 drawRect(offsetX, offsetY);
                 break;
+
             default:
                 break;
         }
         undoList.push(ref.current!.toDataURL());
     };
 
-    //붓굵기
-    const handleLineWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //붓 굵기를 선택하는 함수
+    const handleLineWidthChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ): void => {
         const { value } = e.target;
         setLineWidthValue(Number(value));
+        console.log(tool);
     };
 
-    //색변경
-    const handleSetStrokeColor = (color: string) => {
+    //색을 변경하는 함수
+    const handleSetStrokeColor = (color: string): void => {
         if (!ctx) return;
-        ctx.strokeStyle = color;
+        if (color === "white") {
+            setTool("line");
+        }
+        setCurrentColor(color);
     };
 
-    //전체지우기
-    const removeBoard = () => {
+    //그림판 전체를 지우는 함수
+    const removeBoard = (): void => {
         if (!ctx) return;
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     };
 
-    //저장
-    const handleSave = () => {
+    //그림판을 저장하는 함수
+    const handleSave = (): void => {
         const a = document.createElement("a");
         const fileName = "image.png";
         a.href = canvas.toDataURL();
@@ -111,8 +125,8 @@ const Canvas = () => {
         document.body.removeChild(a);
     };
 
-    //뒤로가기
-    const undo = () => {
+    //이전 상태로 되돌리는 함수
+    const undo = (): void => {
         const undoImage = new Image();
 
         if (!undoList.length) return;
@@ -125,8 +139,8 @@ const Canvas = () => {
             ctx.drawImage(undoImage, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         };
     };
-    //앞으로가기
-    const redo = () => {
+    //현재 상태로 돌아가는 함수
+    const redo = (): void => {
         const redoImage = new Image();
         if (redoList.length === 0) return;
         const redoUrl = redoList.pop();
