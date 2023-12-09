@@ -3,12 +3,20 @@ import "./style.scss";
 import Sidebar from "../../components/Sidebar";
 import { useParams } from "react-router-dom";
 import { mainApi } from "../../api";
-import { chapterType, pathType } from "@src/types/components";
-import { pathName } from "../../data/dummy";
-const Main = () => {
+import { chapterType, selectDataType } from "@src/types/components";
+import { componentList } from "../../data/dummy";
+
+/**
+ * main page 입니다.
+ * @returns {JSX.Element}
+ */
+
+const Main = (): JSX.Element => {
     const [contents, setContents] = useState<chapterType[]>([]);
     const { subId } = useParams();
-    const getAllContent = async () => {
+
+    // 데이터를 가져오는 비동기 함수
+    const getAllContent = async (): Promise<void> => {
         try {
             const { data } = await mainApi.getContents();
             setContents(data);
@@ -17,16 +25,23 @@ const Main = () => {
         }
     };
 
-    const findComponent = () => {
-        const selectedPath = pathName.find((item) => item.id === subId);
+    const findComponent = (): JSX.Element => {
+        const selectedPath = componentList.find((item) => item.id === subId);
         if (selectedPath === undefined) {
-            return <div>hi</div>;
+            return (
+                <div>
+                    <p>main page 입니다.</p>
+                    <p>sideBar를 통해 원하는 항목을 클릭해주세요 :)</p>
+                </div>
+            );
         } else {
             const DetailComponent = selectedPath.component;
-            return <DetailComponent />;
+            const DetailComponentProps = selectedPath.props;
+            return (
+                <DetailComponent DetailComponentProps={DetailComponentProps} />
+            );
         }
     };
-
     useEffect(() => {
         getAllContent();
     }, []);
